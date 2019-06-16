@@ -20,7 +20,7 @@ channel0 = 0xB0
 vref = 2.5
 max_reading = 8388608.0
 #===========================================
-lange = 0x06 # number of bytes to read in the block
+byte_block_size = 0x06 # number of bytes to read in the block
 sleep_time = .001 # number of seconds to sleep between each measurement
 I2C_sleep_time = 0.2 # seconds to sleep between each channel reading
 # I2C_sleep_time - has to be more than 0.2 (seconds).
@@ -28,7 +28,7 @@ I2C_sleep_time = 0.2 # seconds to sleep between each channel reading
 def getreading(adc_address,adc_channel):
     bus.write_byte(adc_address, adc_channel)
     time.sleep(I2C_sleep_time)
-    reading  = bus.read_i2c_block_data(adc_address, adc_channel, lange)
+    reading  = bus.read_i2c_block_data(adc_address, adc_channel, byte_block_size)
 #  Start conversion for the Channel Data
     valor = ((((reading[0]&0x3F))<<16))+((reading[1]<<8))+(((reading[2]&0xE0)))
 #    print("Valor is 0x%x" % valor)
